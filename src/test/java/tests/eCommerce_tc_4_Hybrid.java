@@ -1,43 +1,53 @@
-import io.appium.java_client.AppiumBy;
-import io.appium.java_client.android.nativekey.AndroidKey;
-import io.appium.java_client.android.nativekey.KeyEvent;
-import io.cucumber.messages.types.Product;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+package tests;
+
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.android.CartPage;
-import pages.android.FormPage;
 import pages.android.ProductCatalogue;
+import testUtils.AndroidBaseTest;
 
-import java.time.Duration;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
-public class eCommerce_tc_4_Hybrid extends BaseTest {
+public class eCommerce_tc_4_Hybrid extends AndroidBaseTest {
 
-    @Test
-    public void FillForm() throws InterruptedException {
+    @Test(dataProvider = "getData")
+    public void FillForm(HashMap<String,String> input) throws InterruptedException {
 
-        formPage.setNameField("Nala");
-        formPage.setGender("female");
-        formPage.setCountrySelection("Argentina");
-        ProductCatalogue productCatalogue= formPage.submitForm();
+        formPage.setNameField(input.get("name"));
+        formPage.setGender(input.get("gender"));
+        formPage.setCountrySelection(input.get("country"));
+        ProductCatalogue productCatalogue = formPage.submitForm();
         productCatalogue.addItemToCartByIndex(0);
         productCatalogue.addItemToCartByIndex(0);
-        CartPage cartPage=productCatalogue.goToCartPage();
+        CartPage cartPage = productCatalogue.goToCartPage();
 
-        WebDriverWait wait= new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.attributeContains(driver.findElement(By.id("com.androidsample.generalstore:id/toolbar_title")),"text","Cart"));
-
-        double totalSum=cartPage.getProductsSum();
-        double displayFormattedSum=cartPage.getTotalAmountDisplayed();
-        Assert.assertEquals(totalSum,displayFormattedSum);
+        //cartPage.waitForElementToAppear(cartPage.toolbarTitle);
+        double totalSum = cartPage.getProductsSum();
+        double displayFormattedSum = cartPage.getTotalAmountDisplayed();
+        Assert.assertEquals(totalSum, displayFormattedSum);
         cartPage.acceptTermConditions();
         cartPage.submitOrder();
+
+    }
+
+    @BeforeMethod
+    public void preSetup(){
+        //screen to home page
+        formPage.setActivity();
+    }
+
+
+    @DataProvider
+    public Object[][] getData() throws IOException {
+        List<HashMap<String, String>> data = getJsonData(System.getProperty("user.dir") + "//src//test//java//TestData//eCommerce.json");
+        //return new Object[][]{{"Nala","female","Argentina"},{"Leo","male","Argentina"}};
+        return new Object[][]{{data.get(0)},{data.get(1)}};
+
+    }
 
 
         /*List<WebElement> productPrices = driver.findElements(By.id("com.androidsample.generalstore:id/productPrice"));
@@ -82,5 +92,5 @@ public class eCommerce_tc_4_Hybrid extends BaseTest {
 
 
 
-    }
+
 }

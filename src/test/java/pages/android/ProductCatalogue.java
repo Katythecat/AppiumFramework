@@ -9,6 +9,7 @@ import utils.AndroidActions;
 
 import java.util.List;
 
+//GrandParent(AppiumUtils) -> AndroidActions -> ProductCatalogue
 public class ProductCatalogue extends AndroidActions {
     AndroidDriver driver;
 
