@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class eCommerce_tc_4_Hybrid extends AndroidBaseTest {
+public class eCommerce_tc_4_HybridTest extends AndroidBaseTest {
 
-    @Test(dataProvider = "getData")
+    @Test(dataProvider = "getData", groups = {"Smoke"})
     public void FillForm(HashMap<String,String> input) throws InterruptedException {
 
         formPage.setNameField(input.get("name"));
@@ -34,7 +34,7 @@ public class eCommerce_tc_4_Hybrid extends AndroidBaseTest {
 
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preSetup(){
         //screen to home page
         formPage.setActivity();

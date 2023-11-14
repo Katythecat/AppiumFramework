@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import testUtils.AndroidBaseTest;
 
-public class eCommerce_tc_1 extends AndroidBaseTest {
+public class eCommerce_tc_1Test extends AndroidBaseTest {
 
     @BeforeMethod
     public void preSetup(){
@@ -29,7 +29,7 @@ public class eCommerce_tc_1 extends AndroidBaseTest {
 
         //capture toast msg
         String toast=driver.findElement(By.xpath("(//android.widget.Toast)[1]")).getAttribute("text");
-        Assert.assertEquals(toast,"Please enter your name");
+        Assert.assertEquals(toast,"Please your name");
 
     }
 

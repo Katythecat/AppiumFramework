@@ -30,13 +30,15 @@ public class AndroidBaseTest extends AppiumUtils {
     public AndroidDriver driver;
     public FormPage formPage;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void configureAppium() throws IOException {
 
         Properties prop = new Properties();
         FileInputStream fis= new FileInputStream(System.getProperty("user.dir")+"//src//test//resources//data.properties");
+        String ipAddress=System.getProperty("ipAddress") != null ? System.getProperty("ipAddress") : prop.getProperty("ipAddress");
+        // explain - we use ternary to set ip via mvn if we don't specific ipaddress it will go to .property file
         prop.load(fis);
-        String ipAddress=prop.getProperty("ipAddress");
+        //String ipAddress=prop.getProperty("ipAddress");
         String port=prop.getProperty("port");
         service = startAppiumServer(ipAddress, Integer.parseInt(port));
         UiAutomator2Options options = new UiAutomator2Options();
@@ -49,7 +51,7 @@ public class AndroidBaseTest extends AppiumUtils {
         formPage=new FormPage(driver);
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void tearDown(){
         driver.quit();
         service.stop();

@@ -1,4 +1,4 @@
-package utils;
+package testUtils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -6,6 +6,8 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
+import org.w3c.dom.DOMConfiguration;
+import org.apache.log4j.xml.DOMConfigurator;
 
 public class ExtentReporterNG {
     static ExtentReports extent;

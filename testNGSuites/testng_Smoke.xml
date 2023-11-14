@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+    <groups>
+        <run>
+            <include name="Smoke"/><!-- this will run only smoke tag-->
+        </run>
+    </groups>
+    <listeners>
+        <listener class-name="testUtils.Listeners"/>
+    </listeners>
+
+    <test name="End to end Framework Test">
+        <classes>
+            <class name="tests.eCommerce_tc_4_HybridTest"/>
+        </classes>
+        </test>
+     <test name="Error Validations Test">
+         <classes>
+             <class name="tests.eCommerce_tc_1Test"/>
+         </classes>
+     </test>
+    </suite>
